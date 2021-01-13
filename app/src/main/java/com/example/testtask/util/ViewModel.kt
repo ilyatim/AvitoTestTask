@@ -1,5 +1,6 @@
 package com.example.testtask.util
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.testtask.data.CellData
@@ -13,49 +14,67 @@ class ViewModel : ViewModel(), CoroutineScope by MainScope() {
 
     init {
         fillItems()
-        CoroutineScope(coroutineContext).launch {
-            delay(5000)
-            repeat(1000) {
-                addNewItem()
-                delay(5000)
-            }
+        CountDownTimer(coroutineContext).start(5000 + System.currentTimeMillis()) {
+            addNewItem()
         }
     }
 
+    /**
+     * Method that return MutableLiveData object
+     */
     fun getItems(): MutableLiveData<List<CellData>> = items
 
-    //TODO: checking for empty
+    /**
+     * Method that delete item on selected position
+     * @param pos - position of the item to delete
+     */
     fun deleteItem(pos: Int) {
-        val newItems: MutableList<CellData> = mutableListOf()
-        items.value?.let { newItems.addAll(it) }
-        deletedItems.add(newItems.removeAt(pos))
-        items.value = newItems
-    }
-
-    private fun addNewItem() {
-        if (addDeletedItem()) return
-
         val newItems: MutableList<CellData> = mutableListOf()
         items.value?.let {
             newItems.addAll(it)
-            newItems.addAtRandom(CellData(it.size + 1))
+            deletedItems.add(newItems.removeAt(pos))
             items.value = newItems
         }
     }
 
-    private fun addDeletedItem(): Boolean {
+    /**
+     * Method that add new item in array
+     * checks that there are deleted elements,
+     * if not, creates a new one with the number size + 1
+     */
+    private fun addNewItem() {
         if (deletedItems.isNotEmpty()) {
-            val newItems: MutableList<CellData> = mutableListOf()
-            items.value?.let {
-                newItems.addAll(it)
-                newItems.addAtRandom(deletedItems.removeLast())
-                items.value = newItems
-                return true
-            }
+            addAtRandom(deletedItems.removeLast())
+        } else {
+            addAtRandom(getNewCell())
         }
-        return false
     }
 
+    /**
+     * Method that return new item for array with number - size + 1.
+     * @return new item with number - size + 1
+     */
+    private fun getNewCell(): CellData {
+        items.value?.let { return CellData(it.size + 1) }
+        return CellData(1)
+    }
+
+    /**
+     * Method that add item on random position
+     * @param cell - new item you want to add
+     */
+    private fun addAtRandom(cell: CellData) {
+        val newItems: MutableList<CellData> = mutableListOf()
+        items.value?.let {
+            newItems.addAll(it)
+            newItems.addAtRandom(cell)
+            items.value = newItems
+        }
+    }
+
+    /**
+     * Method that fill primary array with 15 items
+     */
     private fun fillItems() {
         items.value = mutableListOf(
             CellData(1),
@@ -75,6 +94,11 @@ class ViewModel : ViewModel(), CoroutineScope by MainScope() {
             CellData(15),
         )
     }
+
+    /**
+     * extension function to add a new element to a random position
+     * @param item - new item you want to add
+     */
     private fun <V> MutableList<V>.addAtRandom(item: V) {
         if (this.size == 0) {
             this.add(0, item)

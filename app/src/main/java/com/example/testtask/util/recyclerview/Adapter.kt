@@ -5,6 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.testtask.data.CellData
 
+/**
+ * Class adapter for recycler view
+ * @property inflater - layout inflater
+ * @property clickCallback - property callback after clicking the delete button
+ * @property diffUtil - is a utility class that can calculate the difference between two lists
+ */
 class Adapter(
     private val inflater: LayoutInflater,
     private val clickCallback: ClickCallback,
