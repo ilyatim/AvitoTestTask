@@ -1,8 +1,9 @@
-package com.example.testtask
+package com.example.testtask.util.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.testtask.data.CellData
 import com.example.testtask.databinding.CellBinding
 
 class CellHolder(

@@ -1,7 +1,8 @@
-package com.example.testtask
+package com.example.testtask.util
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.testtask.data.CellData
 import kotlinx.coroutines.*
 import java.util.*
 

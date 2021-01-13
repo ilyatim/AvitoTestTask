@@ -1,8 +1,9 @@
-package com.example.testtask
+package com.example.testtask.util.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import com.example.testtask.data.CellData
 
 class Adapter(
     private val inflater: LayoutInflater,

@@ -1,4 +1,4 @@
-package com.example.testtask
+package com.example.testtask.util.recyclerview
 
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil

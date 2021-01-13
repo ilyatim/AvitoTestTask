@@ -1,4 +1,4 @@
-package com.example.testtask
+package com.example.testtask.util.recyclerview
 
 import android.view.View
 import android.widget.Button

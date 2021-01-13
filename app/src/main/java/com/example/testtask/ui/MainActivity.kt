@@ -1,19 +1,19 @@
-package com.example.testtask
+package com.example.testtask.ui
 
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.testtask.util.recyclerview.Adapter
+import com.example.testtask.util.recyclerview.ClickCallback
+import com.example.testtask.util.recyclerview.DiffUtil
+import com.example.testtask.util.ViewModel
 import com.example.testtask.databinding.ActivityMainBinding
-import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
