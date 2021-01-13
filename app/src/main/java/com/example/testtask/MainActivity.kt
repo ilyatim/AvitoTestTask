@@ -13,10 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testtask.databinding.ActivityMainBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -57,12 +54,6 @@ class MainActivity : AppCompatActivity() {
         setLayoutManager()
         setContentView(binding.root)
 
-        CoroutineScope(Dispatchers.Main).launch {
-            repeat(1000) {
-                viewModel.addNewItem()
-                delay(5000)
-            }
-        }
 
         viewModel.getItems().observe(this, Observer {
             adapter?.submitList(it)

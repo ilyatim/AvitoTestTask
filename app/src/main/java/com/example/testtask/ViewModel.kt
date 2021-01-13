@@ -2,14 +2,23 @@ package com.example.testtask
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.*
 import java.util.*
 
-class ViewModel : ViewModel() {
+class ViewModel : ViewModel(), CoroutineScope by MainScope() {
+
     private val items: MutableLiveData<List<CellData>> = MutableLiveData()
     private val deletedItems: MutableList<CellData> = mutableListOf()
 
     init {
         fillItems()
+        CoroutineScope(coroutineContext).launch {
+            delay(5000)
+            repeat(1000) {
+                addNewItem()
+                delay(5000)
+            }
+        }
     }
 
     fun getItems(): MutableLiveData<List<CellData>> = items
@@ -22,7 +31,7 @@ class ViewModel : ViewModel() {
         items.value = newItems
     }
 
-    fun addNewItem() {
+    private fun addNewItem() {
         if (addDeletedItem()) return
 
         val newItems: MutableList<CellData> = mutableListOf()
@@ -66,6 +75,15 @@ class ViewModel : ViewModel() {
         )
     }
     private fun <V> MutableList<V>.addAtRandom(item: V) {
+        if (this.size == 0) {
+            this.add(0, item)
+            return
+        }
         this.add(Random().nextInt(this.size), item)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        if (isActive) cancel()
     }
 }
